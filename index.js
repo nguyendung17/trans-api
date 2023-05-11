@@ -6,13 +6,18 @@ const app = express()
 const port = 3000
 
 app.get('/',async (req, res) => {
-    if(!eq.query.lang || eq.query.text){
-        res.send("")
-        return 
+    try {
+        if(!eq.query.lang || eq.query.text){
+            res.send("")
+            return 
+        }
+        const { text } = await translate(req.query.text, { to: req.query.lang });
+        console.log(text) // => 'Hello World! How are you?'
+        res.send(text)
+    } catch (error) {
+        res.status(500);
     }
-    const { text } = await translate(req.query.text, { to: req.query.lang });
-    console.log(text) // => 'Hello World! How are you?'
-    res.send(text)
+   
 })
 
 app.listen(port, () => {
