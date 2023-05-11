@@ -7,8 +7,9 @@ const port = 3000
 
 app.get('/',async (req, res) => {
     try {
-        if(!eq.query.lang || eq.query.text){
-            res.send("")
+        if(!req.query.lang || !req.query.text){
+            res.status(500);
+            res.send("err")
             return 
         }
         const { text } = await translate(req.query.text, { to: req.query.lang });
@@ -16,6 +17,7 @@ app.get('/',async (req, res) => {
         res.send(text)
     } catch (error) {
         res.status(500);
+        console.log(error);
     }
    
 })
