@@ -18,7 +18,7 @@ app.get('/',async (req, res) => {
         }
 
         if(langs.filter((it)=>{return it.code==lang}).length==0){
-            res.status(500)("No Support code: "+lang,500)
+            res.status(500).send("No Support code: "+lang,500)
             return;
         }
         
